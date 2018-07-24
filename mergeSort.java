@@ -1,122 +1,77 @@
+package finalSort;
 
 public class mergeSort {
+
+	public static void merge(int[] array, int left, int mid, int right)
+
+	   {
+	       // Find sizes of two subarrays to be merged
+	       int n1 = mid - left + 1;
+	       int n2 = right - mid;
+	       /* Create temp arrays */
+	       int L[] = new int [n1];
+	       int R[] = new int [n2];
+	       //Copy data to temp arrays/
+	       for (int i=0; i<n1; ++i)
+	           L[i] = array[left + i];
+	       
+	       for (int j=0; j<n2; ++j)
+	           R[j] = array[mid + 1+ j];
+	       /* Merge the temp arrays */
+	       // Initial indexes of first and second subarrays
+	       int i = 0, j = 0;
+	       // Initial index of merged subarray array
+	       int k = left;
+	       while (i < n1 && j < n2)
+	       {
+	           if (L[i] <= R[j])
+	           {
+	               array[k] = L[i];
+	               i++;
+	           }
+	           else
+	           {
+	               array[k] = R[j];
+	               j++;
+	           }
+	           k++;
+	       }
+	       /* Copy remaining elements of L[] if any */
+	       while (i < n1)
+	       {
+	           array[k] = L[i];
+	           i++;
+	           k++;
+	       }
+	       /* Copy remaining elements of R[] if any */
+	       while (j < n2)
+	       {
+	           array[k] = R[j];
+	           j++;
+	           k++;
+	       }
+	   }
+
+	   // Main function that sorts ar4[l..r] using
+	   // merge()
+	public int[] sort(int[] ar4){
+		mergeS(ar4, 0, ar4.length - 1);
+		
+		return ar4;
+	}
+	  public static void mergeS(int[] ar4, int left, int right)
+	   {
+	       if (left < right)
+	       {
+	           // Find the middle point
+	           int m = (left+right)/2;
+	           // Sort first and second halves
+	           mergeS(ar4, left, m);
+	           mergeS(ar4 , m+1, right);
+	           // Merge the sorted halves
+	           merge(ar4, left, m, right);
+	       }
+	   }
 	
-    public static  int [] mergesort(int[] arr) {
-    	int n= arr.length;
-    	if(n<=1) {
-    		return arr;
-    	}
-    	int middle = n/2;
-    	int[] left = new int [middle];
-    	int[] right;
-    	
-    	if(n%2 ==0 ) {
-    		right = new int[middle];
-    	}
-    	else {
-    		right = new int[middle +1];
-    	}
-    	int[] result = new int[n];
-    	
-    	for(int i=0; i<middle; i++) {
-    		
-    		left[i]=arr[i];
-    	}
-    	int a=0;
-    	for (int j=middle; j< n; j++) {
-    		
-    		if(a< right.length)
-    		{
-    			right[a]=arr[j];
-    			a++;
-    		}
-    	}
-    	
-    	left=mergesort(left);
-    	right=mergesort(right);
-    	result=merge(left,right);
-    	
-    	return result;
-    }
-    
-    public static int[] merge(int [] left, int [] right) {
-    	
-    	int resultSize = left.length + right.length;
-    	int [] result = new int [resultSize];
-    	int indexleft=0;
-    	int indexright=0;
-    	int indexresult=0;
-    	
-    	while(indexleft< left.length  || indexright <right.length) {
-    		
-    		if(indexleft< left.length  && indexright <right.length) {
-    			
-    			if(left[indexleft] <= right[indexright]) {
-    				result [indexresult] =left [indexleft];
-    				indexleft++;
-    				indexresult++;
-    			}
-    			
-    			else {
-    				
-    				result [indexresult] =right [indexright];
-    				indexright++;
-    				indexresult++;
-    			}
-    		}
-    		
-    		else if(indexleft < left.length) {
-    			
-    			result [indexresult] = left [indexleft];
-    			indexleft++;
-    			indexresult++;
-    		}
-    		
-    		else if(indexright < right.length) {
-    			
-    			result [indexresult] = right [indexright];
-    			indexright++;
-    			indexresult++;
-    		}
-    	}
-    	
-    	return result;
-    }
-	public static void printArray(int[] arr)
-    {
-        int n = arr.length;
-        for (int i=0; i<n; ++i)
-            System.out.print(arr[i] + " ");
- 
-        
-    }
-
-	public static int[] insertArray(int[] arr)
-    {
-        int n = arr.length;
-        for (int i=0; i<n; ++i)
-            arr[i] = (int) (Math.random()*5000);
- 
-        return arr;
-    }
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		long start, end;
-		        
-	        int arr[] = new int[5];
-	        insertArray(arr);
-	 System.out.println("Before sorting:");
-	 printArray(arr);
-	 start = System.nanoTime();
-	        arr= mergesort(arr);
-	 end = System.nanoTime();
-	        System.out.println(" ");
-	         System.out.println("After sorting:");
-	        printArray(arr);
-	        System.out.println(" ");
-	        System.out.println("Elapsed time: " + (end - start));
-	
-
 }
-}
+
